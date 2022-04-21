@@ -1,0 +1,90 @@
+<%- include('partials/header') %>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h2 class="h1 display-4"><%= quiz.title %></h2>
+    <p class="lead"><%= quiz.description %></p>
+    <p class="font-weight-bold">par <%= quiz.author.fullname %></p>
+    <p class="lead"><%= quiz.questions.length %> questions</p>
+</div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h2 class="h1 display-4">Bravo !!</h2>
+    <p class="lead">Vous avez répondu correctement à <%= goodResponses %> question(s)</p>
+    <p class="font-weight-bold">Vous avez <%= score %> point(s)</p>
+</div>
+
+
+
+<div class="row">
+
+    <% for (let tag of quiz.tags) { %>
+    <div class="col-3 p-4 text-center">
+        <a class="btn btn-block btn-lg tag tag--<%= tag.name.toLowerCase() %>" href="/quizzes/tag/<%= tag.id %>">
+            <%= tag.name %>
+        </a>
+    </div>
+    <% } %>
+
+</div>
+
+<div class="row">
+
+    <% for (question of quiz.questions) { %> 
+
+        <div class="col-12">
+            <label class="badge level level--<%= question.level.name.toLowerCase() %>"><%= question.level.name %></label>
+            <h4>
+                <%= question.question %>
+            </h4>
+            <ul>
+                <% for (let index in question.answers.sort((a,b) => Math.random() > 0.5 ? -1 : 1)) { %> 
+                    <% if (question.good_answer.id === question.answers[index].id) { %> 
+                        <li class="text-success">
+                    <% } else { %> 
+                        <li>
+                    <% } %> 
+                        <%= Number(index) +1 %>. <%= question.answers[index].description %> 
+                        <% if (user_answers["question_"+question.id] == question.answers[index].id) { %> 
+                            <% if (user_answers["question_"+question.id] == question.good_answer.id) { %> 
+                                <span style="color:green"> &#10004; </span>
+                            <% } else { %> 
+                                <span style="color:red"> X </span>
+                            <% } %> 
+                        <% } %> 
+                    </li>
+                <% } %> 
+            </ul>
+        </div>
+
+    <% } %> 
+
+</div>
+
+
+
+
+<!-- <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h2 class="h2 display-2">Bravo !!!</h2>
+    <p class="lead">Vous avez trouvé <%= //goodResponses %> bonne(s) réponse(s)</p>
+    <p class="lead">Vous avez donc <%= //score %> point(s)</p>
+
+    <h2 class="h2 display-4">Bonnes réponses</h2>
+    <% //for (let i=0; i < goodQuestions.length; i++) { %> 
+    <p class=""><span class="font-weight-bold">Question : </span> <%= //goodQuestions[i].question  %> </p>
+    <p class="">Vous avez trouvé la bonne réponse : <span class ="goodAnswers"><%= //goodAnswers[i].description  %> </span></p>
+    <hr>
+    <% //} %> 
+    <% //if (//badQuestions.length < 1) { %> 
+    <h2 class="h2 display-4">Aucunes mauvaises réponses</h2>
+    <% //} else { %> 
+    <h2 class="h2 display-4">Mauvaises réponses</h2>
+    <% //for (let i=0; i < badQuestions.length; i++) { %> 
+    <p class=""><span class="font-weight-bold">Question : </span><%= //badQuestions[i].question  %> </p>
+    <p class="">La réponse n'était pas : <span class ="badAnswers"><%= //badAnswers[i].description  %> </span></p>
+    <hr>
+    <% //}} %> 
+
+</div> -->
+
+
+<%- include('partials/footer') %>

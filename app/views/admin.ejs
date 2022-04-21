@@ -1,0 +1,88 @@
+<%- include('partials/header') %>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h2 class="h1 display-4">Administration</h2>
+  <p class="lead">Espace permettant de gérer les quizzes !</p>
+</div>
+<div class="col-3 p-4 d-flex">
+    <a class="btn btn-lg btn-block btn-primary col-12 m-2 text-white " href="/admin/addTags/">
+        Ajouter un Tag
+    </a>
+    <a class="btn btn-lg btn-block btn-primary col-12 m-2 text-white" href="/admin/updateTags/">
+        Modifier un Tag
+    </a>
+    <a class="btn btn-lg btn-block btn-primary col-12 m-2 text-white" href="/admin/associateTags/">
+        Associer un Tag
+    </a>
+</div>
+<br>
+
+<% if (addTags) { %>
+    <form action="/admin/addTags" method="POST" class="form-signin">
+        <div class="form-label-group">
+            <input type="name" class="form-control" id="name" name="name" aria-describedby="nameHelp"
+              placeholder="Tag">
+            <label for="lastname">Nom du nouveau tag</label>
+          </div>
+        
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+          </div>
+    </form>
+<% } %>  
+
+<% if (updateTags) { %>
+    <form action="/admin/updateTags" method="POST" class="form-signin">
+        <div class="form-label-group d-flex flex-column">
+            <label for="promo">Choisir le tag à modifier</label>
+
+            <select name="tag" id="tag">
+                <% for(const tag of tags){ %>
+                    <option value="<%= tag.id %>"><%= tag.name %></option>
+                    <% } %>
+                </select>
+        </div>
+
+        <div class="form-label-group">
+            <input type="name" class="form-control" id="name" name="name" aria-describedby="nameHelp"
+              placeholder="Tag">
+            <label for="lastname">Nouveau nom du tag</label>
+        </div>
+        
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </div>
+    </form>
+<% } %>  
+
+<% if (associateTags) { %>
+    <form action="/admin/associateTags" method="POST" class="form-signin">
+        
+        <div class="form-label-group d-flex flex-column">
+            <label for="tag">Choisir le tag à associer</label>
+
+            <select name="tag" id="tag">
+                <% for(const tag of tags){ %>
+                    <option value="<%= tag.id %>"><%= tag.name %></option>
+                    <% } %>
+                </select>
+        </div>
+
+        <div class="form-label-group d-flex flex-column">
+            <label for="quiz">Choisir le quiz à associer</label>
+
+            <select name="quiz" id="quiz">
+                <% for(const quiz of quizzies){ %>
+                    <option value="<%= quiz.id %>"><%= quiz.title %></option>
+                    <% } %>
+                </select>
+        </div>
+        
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Associer</button>
+        </div>
+    </form>
+<% } %>  
+
+
+<%- include('partials/footer') %>
